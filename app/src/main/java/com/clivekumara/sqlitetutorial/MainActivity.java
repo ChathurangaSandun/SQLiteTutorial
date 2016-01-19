@@ -3,8 +3,11 @@ package com.clivekumara.sqlitetutorial;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,15 +20,21 @@ public class MainActivity extends AppCompatActivity {
 
         //http://sqlitebrowser.org/
 
-        MarksProvider marksProvider = new MarksProvider(this);
-        marksProvider.addContact(new Marks("clive",50));
-        marksProvider.addContact(new Marks("sandun",60  ));
-        marksProvider.addContact(new Marks("kumara",70));
-        marksProvider.addContact(new Marks("nadun",80));
-        marksProvider.addContact(new Marks("nimal",100));
+        System.out.println("---------------------------");
+        DatabaseopenHelper db =new DatabaseopenHelper(this);
+        db.addMark(new Marks("sandun", 60));
+        System.out.println("------------------------------");
+        db.addMark(new Marks("kumara", 70));
+        db.addMark(new Marks("nadun", 80));
+        db.addMark(new Marks("nimal", 100));
 
+        List<Marks> allMark = db.getAllMark();
+        for (Marks m: allMark){
+            Log.d("Clivekumara", m.getName() + "  " + m.getMark());
+        }
 
-
+        Marks mk5 = db.getMarks(5);
+        Log.d("mk5", mk5.getName() + "  " + mk5.getMark());
 
 
     }
